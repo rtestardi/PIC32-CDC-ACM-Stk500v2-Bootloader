@@ -59,16 +59,9 @@ main()  // we're called directly by startup.c
     DDPCON = 0;  // disable JTAG
 #endif
 
-    // slow us down
-    // N.B. we can't rely on config bits since the bootloader sets them differently
-    SYSKEY = 0xAA996655; // Write Key1 to SYSKEY
-    SYSKEY = 0x556699AA; // Write Key2 to SYSKEY
-    OSCCONbits.PBDIV = 1;
-    SYSKEY = 0;
-
     cpu_frequency = 80000000;
     oscillator_frequency = 8000000;
-    bus_frequency = 40000000;
+    bus_frequency = 80000000;
 
     assert(sizeof(byte) == 1);
     assert(sizeof(uint16) == 2);
