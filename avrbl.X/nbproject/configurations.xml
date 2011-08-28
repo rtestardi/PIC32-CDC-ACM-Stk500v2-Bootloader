@@ -213,15 +213,15 @@
         </linkerTool>
       </compileType>
       <C32>
-        <property key="extra-include-directories" value="..;../sources"/>
         <property key="additional-warnings" value="false"/>
+        <property key="extra-include-directories" value="..;../sources"/>
         <property key="preprocessor-macros" value="PRGSWITCH=1"/>
         <property key="exclude-floating-point" value="true"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="use-indirect-calls" value="false"/>
-        <property key="support-ansi" value="false"/>
         <property key="strict-ansi" value="false"/>
+        <property key="support-ansi" value="false"/>
         <property key="optimization-level" value="-Os"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
@@ -237,10 +237,10 @@
         <property key="preprocessor-macros" value=""/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="list-file" value=""/>
-        <property key="list-source" value="false"/>
         <property key="list-assembly" value="false"/>
-        <property key="warning-level" value=""/>
+        <property key="list-source" value="false"/>
         <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="warning-level" value=""/>
         <property key="list-section-info" value="false"/>
         <property key="omit-forms" value="false"/>
         <property key="list-symbols" value="false"/>
@@ -294,15 +294,15 @@
         </linkerTool>
       </compileType>
       <C32>
-        <property key="extra-include-directories" value="..;../sources"/>
         <property key="additional-warnings" value="false"/>
+        <property key="extra-include-directories" value="..;../sources"/>
         <property key="preprocessor-macros" value="PRGSWITCH=1"/>
         <property key="exclude-floating-point" value="true"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="use-indirect-calls" value="false"/>
-        <property key="support-ansi" value="false"/>
         <property key="strict-ansi" value="false"/>
+        <property key="support-ansi" value="false"/>
         <property key="optimization-level" value="-Os"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
@@ -318,10 +318,10 @@
         <property key="preprocessor-macros" value=""/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="list-file" value=""/>
-        <property key="list-source" value="false"/>
         <property key="list-assembly" value="false"/>
-        <property key="warning-level" value=""/>
+        <property key="list-source" value="false"/>
         <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="warning-level" value=""/>
         <property key="list-section-info" value="false"/>
         <property key="omit-forms" value="false"/>
         <property key="list-symbols" value="false"/>
@@ -363,7 +363,7 @@
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MX460F512L</targetDevice>
         <targetHeader></targetHeader>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>SKDEPIC32PlatformTool</platformTool>
         <languageToolchain>C32</languageToolchain>
         <languageToolchainVersion>1.12</languageToolchainVersion>
         <platform>3</platform>
@@ -375,15 +375,15 @@
         </linkerTool>
       </compileType>
       <C32>
-        <property key="extra-include-directories" value="..;../sources"/>
         <property key="additional-warnings" value="false"/>
+        <property key="extra-include-directories" value="..;../sources"/>
         <property key="preprocessor-macros" value="PRGSWITCH=0;PINCONFIG=1"/>
         <property key="exclude-floating-point" value="true"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="use-indirect-calls" value="false"/>
-        <property key="support-ansi" value="false"/>
         <property key="strict-ansi" value="false"/>
+        <property key="support-ansi" value="false"/>
         <property key="optimization-level" value="-Os"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
@@ -399,10 +399,10 @@
         <property key="preprocessor-macros" value=""/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="list-file" value=""/>
-        <property key="list-source" value="false"/>
         <property key="list-assembly" value="false"/>
-        <property key="warning-level" value=""/>
+        <property key="list-source" value="false"/>
         <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="warning-level" value=""/>
         <property key="list-section-info" value="false"/>
         <property key="omit-forms" value="false"/>
         <property key="list-symbols" value="false"/>
@@ -436,15 +436,15 @@
         <property key="legacy-libc" value="false"/>
         <property key="no-start-files" value="false"/>
       </C32Global>
-      <PICkit3PlatformTool>
-      </PICkit3PlatformTool>
+      <SKDEPIC32PlatformTool>
+      </SKDEPIC32PlatformTool>
     </conf>
     <conf name="Cerebot_MX7" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MX795F512L</targetDevice>
         <targetHeader></targetHeader>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>PK3OBPlatformTool</platformTool>
         <languageToolchain>C32</languageToolchain>
         <languageToolchainVersion>1.12</languageToolchainVersion>
         <platform>3</platform>
@@ -456,15 +456,15 @@
         </linkerTool>
       </compileType>
       <C32>
-        <property key="extra-include-directories" value="..;../sources"/>
         <property key="additional-warnings" value="false"/>
-        <property key="preprocessor-macros" value="PRGSWITCH=0;PINCONFIG=1"/>
+        <property key="extra-include-directories" value="..;../sources"/>
+        <property key="preprocessor-macros" value="PRGSWITCH=0;PINCONFIG=2"/>
         <property key="exclude-floating-point" value="true"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="use-indirect-calls" value="false"/>
-        <property key="support-ansi" value="false"/>
         <property key="strict-ansi" value="false"/>
+        <property key="support-ansi" value="false"/>
         <property key="optimization-level" value="-Os"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
@@ -480,10 +480,10 @@
         <property key="preprocessor-macros" value=""/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="list-file" value=""/>
-        <property key="list-source" value="false"/>
         <property key="list-assembly" value="false"/>
-        <property key="warning-level" value=""/>
+        <property key="list-source" value="false"/>
         <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="warning-level" value=""/>
         <property key="list-section-info" value="false"/>
         <property key="omit-forms" value="false"/>
         <property key="list-symbols" value="false"/>
@@ -517,8 +517,15 @@
         <property key="legacy-libc" value="false"/>
         <property key="no-start-files" value="false"/>
       </C32Global>
-      <PICkit3PlatformTool>
-      </PICkit3PlatformTool>
+      <PK3OBPlatformTool>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="memories.select" value="manual"/>
+        <property key="memories.programmemory.end" value="0x1d07ffff"/>
+        <property key="memories.eeprom" value="false"/>
+        <property key="memories.programmemory.start" value="0x1d000000"/>
+        <property key="memories.id" value="false"/>
+        <property key="memories.programmemory" value="true"/>
+      </PK3OBPlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>

@@ -11,7 +11,10 @@
 #include "main.h"
 
 // our LED interface
-#if PINCONFIG == 1
+#if PINCONFIG == 2
+#define LEDTRIS  TRISGbits.TRISG15  // RG15
+#define LEDLAT  LATGbits.LATG15  // RG15
+#elif PINCONFIG == 1
 #define LEDTRIS  TRISBbits.TRISB13  // RB13
 #define LEDLAT  LATBbits.LATB13  // RB13
 #else
