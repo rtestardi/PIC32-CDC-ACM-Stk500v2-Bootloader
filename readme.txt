@@ -1,5 +1,6 @@
 *** this repository is now stale ***
 *** use the repository in the chipkit project instead ***
+*** see: https://github.com/chipKIT32/pic32-Arduino-USB-Bootloader ***
 
 This project builds a simple Stk500v2 bootloader that is compatible with
 avrdude and MPIDE (used on the chipKIT boards) for any PIC32 MX4, 5, 6, or 7
