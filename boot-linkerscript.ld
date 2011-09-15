@@ -2,7 +2,6 @@
 OUTPUT_FORMAT("elf32-tradlittlemips")
 OUTPUT_ARCH(pic32mx)
 ENTRY(_reset)
-
 /*
  * Provide for a minimum stack and heap size
  * - _min_stack_size - represents the minimum space that must be made
@@ -15,7 +14,6 @@ ENTRY(_reset)
 EXTERN (_min_stack_size _min_heap_size)
 PROVIDE(_min_stack_size = 0x400) ;
 PROVIDE(_min_heap_size = 0) ;
-
 /*************************************************************************
  * Processor-specific object file.  Contains SFR definitions.
  *************************************************************************/
@@ -25,10 +23,7 @@ INPUT("processor.o")
  * For interrupt vector handling
  *************************************************************************/
 PROVIDE(_vector_spacing = 0x00000001);
-//_ebase_address  = 0x9FC01000;
-_ebase_address  = 0x0;
-//_general_exception_context = 0xBFC00000;
-//_on_bootstrap = 0xBFC00000;
+_ebase_address  = 0x9FC01000;
 
 /*************************************************************************
  * Memory Address Equates
@@ -36,6 +31,7 @@ _ebase_address  = 0x0;
 _RESET_ADDR              = 0xBFC00000;
 _BEV_EXCPT_ADDR          = 0xBFC00380;
 _DBG_EXCPT_ADDR          = 0xBFC00480;
+_DBG_CODE_ADDR           = 0xBFC02000;
 _GEN_EXCPT_ADDR          = _ebase_address + 0x180;
 
 /*************************************************************************
@@ -47,32 +43,21 @@ _GEN_EXCPT_ADDR          = _ebase_address + 0x180;
  *************************************************************************/
 MEMORY
 {
-  kseg0_program_mem    (rx)  : ORIGIN = 0x9D000000, LENGTH = 0x00000
-  //kseg0_boot_mem       (rx)  : ORIGIN = 0x9FC00490, LENGTH = 0x970
-  //exception_mem              : ORIGIN = 0x9FC01180, LENGTH = 0x90
-  //kseg0_boot_memB      (rx)  : ORIGIN = 0x9FC01210, LENGTH = 0xDF0
-  kseg0_boot_mem       (rx)  : ORIGIN = 0x9FC00490, LENGTH = 0x2B00
-  exception_mem              : ORIGIN = 0x9FC00000, LENGTH = 0x0
+  kseg0_program_mem    (rx)  : ORIGIN = 0x9FC00490, LENGTH = 0x2B00
+  kseg0_boot_mem             : ORIGIN = 0x9FC00490, LENGTH = 0
+  exception_mem              : ORIGIN = 0x9FC01000, LENGTH = 0
   kseg1_boot_mem             : ORIGIN = 0xBFC00000, LENGTH = 0x490
+  debug_exec_mem             : ORIGIN = 0xBFC02000, LENGTH = 0xFF0
   config3                    : ORIGIN = 0xBFC02FF0, LENGTH = 0x4
   config2                    : ORIGIN = 0xBFC02FF4, LENGTH = 0x4
   config1                    : ORIGIN = 0xBFC02FF8, LENGTH = 0x4
   config0                    : ORIGIN = 0xBFC02FFC, LENGTH = 0x4
-
-  boot_software_key          : ORIGIN = 0xA0000000, LENGTH = 0x4
-  kseg1_data_mem       (w!x) : ORIGIN = 0xA0000004, LENGTH = 0x7FFC
-/*
-  kseg1_data_mem       (w!x) : ORIGIN = 0xA0000000, LENGTH = 0x8000
-*/
+  kseg1_data_mem       (w!x) : ORIGIN = 0xA0000000, LENGTH = 0x20000
   sfrs                       : ORIGIN = 0xBF800000, LENGTH = 0x100000
+  configsfrs                 : ORIGIN = 0xBFC02FF0, LENGTH = 0x10
 }
 SECTIONS
 {
-
-  .boot_software_key_sec : {
-    *(.boot_software_key_sec)
-  } > boot_software_key
-
   .config_BFC02FF0 : {
     KEEP(*(.config_BFC02FF0))
   } > config3
@@ -86,30 +71,36 @@ SECTIONS
     KEEP(*(.config_BFC02FFC))
   } > config0
 }
-
-
 SECTIONS
 {
   /* Boot Sections */
   .reset _RESET_ADDR :
   {
     KEEP(*(.reset))
+    KEEP(*(.reset.startup))
   } > kseg1_boot_mem
+  .bev_excpt _BEV_EXCPT_ADDR :
+  {
+    KEEP(*(.bev_handler))
+  } > kseg1_boot_mem
+/*
   .dbg_excpt _DBG_EXCPT_ADDR (NOLOAD) :
   {
     . += (DEFINED (_DEBUGGER) ? 0x8 : 0x0);
   } > kseg1_boot_mem
-  
-  /DISCARD/ :
+  .dbg_code _DBG_CODE_ADDR (NOLOAD) :
   {
-    *(.gen_handler)
-  } 
-  /DISCARD/ :
+    . += (DEFINED (_DEBUGGER) ? 0xFF0 : 0x0);
+  } > debug_exec_mem
+  .app_excpt _GEN_EXCPT_ADDR :
   {
-    *(.vector_0)
-  } 
-
-/*
+    KEEP(*(.gen_handler))
+  } > exception_mem
+  .vector_0 _ebase_address + 0x200 :
+  {
+    KEEP(*(.vector_0))
+  } > exception_mem
+  ASSERT (_vector_spacing == 0 || SIZEOF(.vector_0) <= (_vector_spacing << 5), "function at exception vector 0 too large")
   .vector_1 _ebase_address + 0x200 + (_vector_spacing << 5) * 1 :
   {
     KEEP(*(.vector_1))
@@ -426,30 +417,33 @@ SECTIONS
   } > exception_mem
   ASSERT (_vector_spacing == 0 || SIZEOF(.vector_63) <= (_vector_spacing << 5), "function at exception vector 63 too large")
 */
+  /*  Starting with C32 v2.00, the startup code is in the .reset.startup section.
+   *  Keep this here for backwards compatibility.
+   */
   .startup ORIGIN(kseg0_boot_mem) :
   {
     KEEP(*(.startup))
   } > kseg0_boot_mem
-  /* Code Sections */
-  .text  :
+  /* Code Sections - Note that input sections *(.text) and *(.text.*)
+  ** are not mapped here. Starting in C32 v2.00, the best-fit allocator
+  ** locates them, so that .text may flow around absolute sections
+  ** as needed.
+  */
+  .text :
   {
-    _text_begin = . ;
-    *(.text .stub .text.* .gnu.linkonce.t.*)
+    *(.stub .gnu.linkonce.t.*)
     KEEP (*(.text.*personality*))
-    /* .gnu.warning sections are handled specially by elf32.em.  */
-    *(.gnu.warning)
     *(.mips16.fn.*)
     *(.mips16.call.*)
-    _text_end = . ;
-  } >kseg0_boot_mem
+    *(.gnu.warning)
+  } >kseg0_program_mem
   /* Read-only sections */
   .rodata   :
   {
-    *(.rodata .rodata.* .gnu.linkonce.r.*)
+    *( /* .rodata */  .rodata.* .gnu.linkonce.r.*)
     *(.rodata1)
     . = ALIGN(4) ;
-  } >kseg0_boot_mem
-  
+  } >kseg0_program_mem
   /*
    * Small initialized constant global and static data can be placed in the
    * .sdata2 section.  This is different from .sdata, which contains small
@@ -459,7 +453,7 @@ SECTIONS
   {
     *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
     . = ALIGN(4) ;
-  } >kseg0_boot_mem
+  } >kseg0_program_mem
   /*
    * Uninitialized constant global and static data (i.e., variables which will
    * always be zero).  Again, this is different from .sbss, which contains
@@ -469,47 +463,53 @@ SECTIONS
   {
     *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
     . = ALIGN(4) ;
-  } >kseg0_boot_mem
+  } >kseg0_program_mem
   .eh_frame_hdr : { *(.eh_frame_hdr) }
   .eh_frame       : ONLY_IF_RO { KEEP (*(.eh_frame)) }
   .dbg_data (NOLOAD) :
   {
     . += (DEFINED (_DEBUGGER) ? 0x200 : 0x0);
   } >kseg1_data_mem
-  .data   :
+  /* Persistent data - Use the new C 'persistent' attribute instead. */
+  .persist :
   {
-    _data_begin = . ;
-    *(.data .data.* .gnu.linkonce.d.*)
-    KEEP (*(.gnu.linkonce.d.*personality*))
-    *(.data1)
-  } >kseg1_data_mem AT>kseg0_boot_mem
-  _data_image_begin = LOADADDR(.data) ;
+    _persist_begin = .;
+    *(.persist .persist.*)
+    . = ALIGN(4);
+    _persist_end = .;
+  } >kseg1_data_mem
   .eh_frame       : ONLY_IF_RW { KEEP (*(.eh_frame)) }
   . = .;
   _gp = ALIGN(16) + 0x7ff0;
   .got ALIGN(4)   :
   {
      *(.got.plt) *(.got)
-  } >kseg1_data_mem AT>kseg0_boot_mem
+  } >kseg1_data_mem /* AT>kseg0_program_mem */
+  /*
+   * Note that "small" data sections are still mapped in the linker
+   * script. This ensures that they are grouped together for
+   * gp-relative addressing. Absolute sections are allocated after
+   * the "small" data sections so small data cannot flow around them.
+   */
   /*
    * We want the small data sections together, so single-instruction offsets
    * can access them all, and initialized data all before uninitialized, so
    * we can shorten the on-disk segment size.
    */
-  .sdata ALIGN(4)   :
+  .sdata ALIGN(4) /*   */ :
   {
     _sdata_begin = . ;
     *(.sdata .sdata.* .gnu.linkonce.s.*)
     _sdata_end = . ;
-  } >kseg1_data_mem AT>kseg0_boot_mem
+  } >kseg1_data_mem
   .lit8           :
   {
     *(.lit8)
-  } >kseg1_data_mem AT>kseg0_boot_mem
+  } >kseg1_data_mem
   .lit4           :
   {
     *(.lit4)
-  } >kseg1_data_mem AT>kseg0_boot_mem
+  } >kseg1_data_mem
   . = ALIGN (4) ;
   _data_end = . ;
   _bss_begin = . ;
@@ -521,64 +521,43 @@ SECTIONS
     *(.scommon)
     _sbss_end = . ;
   } >kseg1_data_mem
+  /*
+   * Note that input sections named .data* are no longer mapped here.
+   * Starting in C32 v2.00, the best-fit allocator locates them, so
+   * that they may flow around absolute sections as needed.
+   */
+  /*
+   * Align here to ensure that the .bss section occupies space up to
+   * _end.  Align after .bss to ensure correct alignment even if the
+   * .bss section disappears because there are no input sections.
+   *
+   * Note that input sections named .bss* are no longer mapped here.
+   * Starting in C32 v2.00, the best-fit allocator locates them, so
+   * that they may flow around absolute sections as needed.
+   *
+   */
   .bss   :
   {
     *(.dynbss)
-    *(.bss .bss.* .gnu.linkonce.b.*)
     *(COMMON)
-    /*
-     * Align here to ensure that the .bss section occupies space up to
-     * _end.  Align after .bss to ensure correct alignment even if the
-     * .bss section disappears because there are no input sections.
-     */
     . = ALIGN(4) ;
   } >kseg1_data_mem
   . = ALIGN(4) ;
   _end = . ;
   _bss_end = . ;
-  /* Heap allocating takes a chunk of memory following BSS */
-  .heap ALIGN(8) :
-  {
-    _heap = . ;
-    . += _min_heap_size ;
-    . = ALIGN(8);
-  } >kseg1_data_mem
-  /* Stack allocation follows the heap */
-  .stack ALIGN(8) :
-  {
-    _splim = . ;
-    _SPLIM = . ;
-    . += _min_stack_size ;
-    . = ALIGN(8);
-  } >kseg1_data_mem
+  /* Starting with C32 v2.00, the heap and stack are dynamically
+   * allocated by the linker.
+   */
   /*
    * RAM functions go at the end of our stack and heap allocation.
    * Alignment of 2K required by the boundary register (BMXDKPBA).
+   *
+   * RAM functions are now allocated by the linker. The linker generates
+   * _ramfunc_begin and _bmxdkpba_address symbols depending on the
+   * location of RAM functions.
    */
-  .ramfunc ALIGN(2K) :
-  {
-    _ramfunc_begin = . ;
-    *(.ramfunc  .ramfunc.*)
-    . = ALIGN(4) ;
-    _ramfunc_end = . ;
-  } >kseg1_data_mem AT>kseg0_boot_mem
-  _ramfunc_image_begin = LOADADDR(.ramfunc) ;
-  _ramfunc_length = SIZEOF(.ramfunc) ;
-  _bmxdkpba_address = _ramfunc_begin - ORIGIN(kseg1_data_mem) ;
   _bmxdudba_address = LENGTH(kseg1_data_mem) ;
   _bmxdupba_address = LENGTH(kseg1_data_mem) ;
-  /*
-   * The actual top of stack should include the gap between the stack
-   * section and the beginning of the .ramfunc section caused by the
-   * alignment of the .ramfunc section minus 2 words.  If RAM functions
-   * do not exist, then the top of the stack should point to the end of
-   * the data memory.
-   */
-  _stack = (_ramfunc_length > 0)
-         ? _ramfunc_begin - 8
-         : ORIGIN(kseg1_data_mem) + LENGTH(kseg1_data_mem) ;
-  ASSERT((_min_stack_size + _min_heap_size) <= (_stack - _heap),
-    "Not enough space to allocate both stack and heap.  Reduce heap and/or stack size.")
     /* The .pdr section belongs in the absolute section */
     /DISCARD/ : { *(.pdr) }
     /* We don't load .reginfo onto the target, so don't locate it
@@ -618,6 +597,10 @@ SECTIONS
   .debug_funcnames 0 : { *(.debug_funcnames) }
   .debug_typenames 0 : { *(.debug_typenames) }
   .debug_varnames  0 : { *(.debug_varnames) }
+  .debug_pubtypes 0 : { *(.debug_pubtypes) }
+  .debug_ranges   0 : { *(.debug_ranges) }
   /DISCARD/ : { *(.rel.dyn) }
+  .gnu.attributes 0 : { KEEP (*(.gnu.attributes)) }
   /DISCARD/ : { *(.note.GNU-stack) }
+  /DISCARD/ : { *(.note.GNU-stack) *(.gnu_debuglink) *(.gnu.lto_*) *(.discard) }
 }

@@ -32,6 +32,13 @@ CND_ARTIFACT_PATH_CUI32_MX440=dist/CUI32_MX440/production/avrbl.X.production.elf
 CND_PACKAGE_DIR_CUI32_MX440=${CND_DISTDIR}/CUI32_MX440/package
 CND_PACKAGE_NAME_CUI32_MX440=avrbl.x.tar
 CND_PACKAGE_PATH_CUI32_MX440=${CND_DISTDIR}/CUI32_MX440/package/avrbl.x.tar
+# CUI32Stem_MX795 configuration
+CND_ARTIFACT_DIR_CUI32Stem_MX795=dist/CUI32Stem_MX795/production
+CND_ARTIFACT_NAME_CUI32Stem_MX795=avrbl.X.production.elf
+CND_ARTIFACT_PATH_CUI32Stem_MX795=dist/CUI32Stem_MX795/production/avrbl.X.production.elf
+CND_PACKAGE_DIR_CUI32Stem_MX795=${CND_DISTDIR}/CUI32Stem_MX795/package
+CND_PACKAGE_NAME_CUI32Stem_MX795=avrbl.x.tar
+CND_PACKAGE_PATH_CUI32Stem_MX795=${CND_DISTDIR}/CUI32Stem_MX795/package/avrbl.x.tar
 # Cerebot_MX4 configuration
 CND_ARTIFACT_DIR_Cerebot_MX4=dist/Cerebot_MX4/production
 CND_ARTIFACT_NAME_Cerebot_MX4=avrbl.X.production.elf
