@@ -40,7 +40,7 @@ ASFLAGS=
 LDLIBSOPTIONS=
 
 # Path to java used to run MPLAB X when this makefile was created
-MP_JAVA_PATH=C:\\Program\ Files\\Java\\jdk1.6.0_27\\jre/bin/
+MP_JAVA_PATH=C:\\Program\ Files\ \(x86\)\\Java\\jdk1.6.0_29\\jre/bin/
 OS_CURRENT="$(shell uname -s)"
 ############# Tool locations ##########################################
 # If you copy a project from one host to another, the path where the  #
@@ -48,17 +48,17 @@ OS_CURRENT="$(shell uname -s)"
 # If you open this project with MPLAB X in the new host, this         #
 # makefile will be regenerated and the paths will be corrected.       #
 #######################################################################
-MP_CC=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin\\pic32-gcc.exe
+MP_CC=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin\\pic32-gcc.exe
 # MP_BC is not defined
-MP_AS=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin\\pic32-as.exe
-MP_LD=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin\\pic32-ld.exe
-MP_AR=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin\\pic32-ar.exe
+MP_AS=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin\\pic32-as.exe
+MP_LD=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin\\pic32-ld.exe
+MP_AR=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin\\pic32-ar.exe
 # MP_BC is not defined
-MP_CC_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin
+MP_CC_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin
 # MP_BC_DIR is not defined
-MP_AS_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin
-MP_LD_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin
-MP_AR_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\mplabc32\\v2.00\\bin
+MP_AS_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin
+MP_LD_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin
+MP_AR_DIR=C:\\Program\ Files\ \(x86\)\\Microchip\\MPLAB\ C32\ Suite\\bin
 # MP_BC_DIR is not defined
 
 .build-conf: ${BUILD_SUBPROJECTS}

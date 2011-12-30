@@ -40,7 +40,7 @@ ASFLAGS=
 LDLIBSOPTIONS=
 
 # Path to java used to run MPLAB X when this makefile was created
-MP_JAVA_PATH=C:\\Program\ Files\\Java\\jdk1.6.0_27\\jre/bin/
+MP_JAVA_PATH=C:\\Program\ Files\ \(x86\)\\Java\\jdk1.6.0_29\\jre/bin/
 OS_CURRENT="$(shell uname -s)"
 ############# Tool locations ##########################################
 # If you copy a project from one host to another, the path where the  #
