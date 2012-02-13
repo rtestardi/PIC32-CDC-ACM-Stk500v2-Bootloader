@@ -22,8 +22,8 @@
       </runprofile>
     </conf>
     <conf name="UBW32_MX460" type="2">
-      <platformToolSN>:=MPLABCommUSB:=04D8:=900A:=0002:=Microchip Technology Inc.:=PICkit 3:=BUR110376379:=x:=en</platformToolSN>
-      <languageToolchainDir>C:\Program Files\Microchip\MPLAB C32 Suite\bin</languageToolchainDir>
+      <platformToolSN></platformToolSN>
+      <languageToolchainDir>C:\Program Files (x86)\Microchip\mplabc32\v2.02\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>
         <placeholder2>place holder 2</placeholder2>
@@ -40,8 +40,8 @@
       </runprofile>
     </conf>
     <conf name="UBW32_MX795" type="2">
-      <platformToolSN>:=MPLABCommUSB:=04D8:=900A:=0002:=Microchip Technology Inc.:=PICkit 3:=BUR110376379:=x:=en</platformToolSN>
-      <languageToolchainDir>C:\Program Files\Microchip\MPLAB C32 Suite\bin</languageToolchainDir>
+      <platformToolSN></platformToolSN>
+      <languageToolchainDir>C:\Program Files (x86)\Microchip\mplabc32\v2.02\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>
         <placeholder2>place holder 2</placeholder2>
@@ -58,8 +58,8 @@
       </runprofile>
     </conf>
     <conf name="CUI32_MX440" type="2">
-      <platformToolSN>:=MPLABCommUSB:=04D8:=900A:=0002:=Microchip Technology Inc.:=PICkit 3:=BUR110376379:=x:=en</platformToolSN>
-      <languageToolchainDir>C:\Program Files\Microchip\MPLAB C32 Suite\bin</languageToolchainDir>
+      <platformToolSN></platformToolSN>
+      <languageToolchainDir>C:\Program Files (x86)\Microchip\mplabc32\v2.02\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>
         <placeholder2>place holder 2</placeholder2>
@@ -94,8 +94,8 @@
       </runprofile>
     </conf>
     <conf name="Cerebot_MX4" type="2">
-      <platformToolSN>:=MPLABCommUSB:=04D8:=00E0:=0000:=Microchip Technology Inc.:=PIC32MX Starter Kit  (C) 2007:=?:=x:=en</platformToolSN>
-      <languageToolchainDir>C:\Program Files\Microchip\MPLAB C32 Suite\bin</languageToolchainDir>
+      <platformToolSN></platformToolSN>
+      <languageToolchainDir>C:\Program Files (x86)\Microchip\mplabc32\v2.02\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>
         <placeholder2>place holder 2</placeholder2>
@@ -113,7 +113,7 @@
     </conf>
     <conf name="Cerebot_MX7" type="2">
       <platformToolSN></platformToolSN>
-      <languageToolchainDir>C:\Program Files\Microchip\MPLAB C32 Suite\bin</languageToolchainDir>
+      <languageToolchainDir>C:\Program Files (x86)\Microchip\mplabc32\v2.02\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>
         <placeholder2>place holder 2</placeholder2>
